@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
-  private router = inject(Router);
+  private router =  inject(Router)
 
   loginForm = this.fb.group({
     email: new FormControl<string>('', [Validators.email]),
@@ -25,14 +25,14 @@ export class LoginComponent {
   error: string | null = null;
 
   async onClick() {
-    console.log(this.loginForm.value)
     let {email, password} = this.loginForm.value
 
     if(!email || !password || this.loginForm.invalid) return;
 
     try {
-      await this.auth.login(email,password);
-      this.router.navigate(['/']);
+      this.auth.login(email,password).subscribe(()=>
+        this.router.navigate(['/'])
+      )
     } catch (err) {
       this.error = 'Invalid email or password.';
     } finally {
