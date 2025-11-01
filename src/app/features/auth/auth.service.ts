@@ -2,51 +2,49 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/enviroment.prod';
 import { StorageService } from '../storage/storage.service';
-import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { UserService } from '../user/user.service';
+import { LoginRequestPayload, LoginRequestResponse } from './auth.model';
 
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private http = inject(HttpClient); 
+  private http = inject(HttpClient);
   private userService = inject(UserService)
   private storage = inject(StorageService)
-  private router = inject(Router)
 
-  login(email:string, password:string): Observable<{token:string, refresh_token:string }> {
-  return this.http.post<{token:string, refresh_token:string }>(`${environment.apiHost}/login_check`,
+  login(loginData: LoginRequestPayload): Observable<LoginRequestResponse> {
+    return this.http.post<LoginRequestResponse>(`${environment.apiHost}/login_check`,
       {
-        email: email,
-        password: password
+        email: loginData.username,
+        password: loginData.password
       }
-     ).pipe(tap((response)=>{
-        this.storage.save(response)
-     }))
+    ).pipe(tap((response) => {
+      this.storage.save(response)
+    }))
   }
 
-  refresh(): Observable<Object> {
-    return this.http.post(`${environment.apiHost}/token/refresh`,
+  refresh(): Observable<LoginRequestResponse> {
+    return this.http.post<LoginRequestResponse>(`${environment.apiHost}/token/refresh`,
       {
         refresh_token: this.getRefreshToken()
       }
-     )
+    )
   }
 
-  getAuthToken(){
+  getAuthToken() {
     return this.storage.getItem('token')
   }
 
-  getRefreshToken(){
+  getRefreshToken() {
     return this.storage.getItem('refresh_token')
   }
 
-  setAuthTokens(tokens: Object){
+  setAuthTokens(tokens: Object) {
     this.storage.save(tokens)
   }
-  
+
   logout() {
-    console.log('banana')
     this.userService.clearUser()
     this.storage.removeItem('token')
     this.storage.removeItem('refresh_token')

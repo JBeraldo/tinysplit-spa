@@ -1,6 +1,8 @@
 export interface User {
     id: number,
     name: string,
-    nickname?: string
+    password: string | null
+    nickname: string | null
     email: string
 }
+export type RegisterUserPayload = Partial<Omit<User,"id" | 'nickname'>>

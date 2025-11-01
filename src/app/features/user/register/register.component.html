@@ -1,0 +1,21 @@
+<div class="flex w-screen h-screen font-display justify-center ">
+  <div class="form-layout flex  items-center">
+    <form [formGroup]="registerForm">
+      <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+        <legend class="fieldset-legend">Register</legend>
+
+        <label class="label">Name</label>
+        <input [formControl]="registerForm.controls.name" type="text" class="input" placeholder="Name" />
+
+        <label class="label">Email</label>
+        <input [formControl]="registerForm.controls.email" type="email" class="input" placeholder="Email" />
+
+        <label class="label">Password</label>
+        <input [formControl]="registerForm.controls.password" type="password" class="input" placeholder="Password" />
+
+        <button routerLink="/login/" class="btn btn-outline btn-secondary mt-4">Log In</button>
+        <button (click)="onClick()" [disabled]="registerForm.invalid" class="btn btn-secondary mt-4">Register</button>
+      </fieldset>
+    </form>
+  </div>
+</div>

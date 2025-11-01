@@ -5,12 +5,13 @@
         <legend class="fieldset-legend">Login</legend>
 
         <label class="label">Email</label>
-        <input formControlName="email" type="email" class="input" placeholder="Email" />
+        <input [formControl]="loginForm.controls.username" (keydown.enter)="onClick()" type="email" class="input" placeholder="Email" />
 
         <label class="label">Password</label>
-        <input formControlName="password"  type="password" class="input" placeholder="Password" />
+        <input [formControl]="loginForm.controls.password" (keydown.enter)="onClick()" type="password" class="input" placeholder="Password" />
 
-        <button (click)="onClick()" class="btn btn-secondary mt-4">Login</button>
+        <button routerLink="/user/register" class="btn btn-outline btn-secondary mt-4">Register</button>
+        <button (click)="onClick()"  [disabled]="loginForm.invalid" class="btn btn-secondary mt-4">Login</button>
       </fieldset>
     </form>
   </div>

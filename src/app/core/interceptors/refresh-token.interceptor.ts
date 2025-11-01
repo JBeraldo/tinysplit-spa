@@ -7,11 +7,9 @@ export function RefreshTokenInterceptor(req: HttpRequest<unknown>, next: HttpHan
     let auth = inject(AuthService);
     const cloneReq = getRequestWithUpdatedToken(req, auth);
 
-    if (!auth.isAuthenticated || req.url.includes('/token/refresh')) {
+    if (req.url.includes('/token/refresh') ||req.url.includes('/login_check') ) {
         return next(cloneReq)
     }
-
-
 
     return next(cloneReq).pipe(catchError((error) => {
         if (error.status !== 401) {

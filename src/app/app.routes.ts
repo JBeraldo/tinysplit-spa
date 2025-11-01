@@ -5,6 +5,8 @@ import { DashboardPageComponent } from './features/dashboard/dashboard-page/dash
 import { LoginComponent } from './features/auth/login/login.component';
 import { FullscreenLayoutComponent } from './layouts/fullscreen-layout/fullscreen-layout.component';
 import { logoutResolver } from './features/auth/resolvers/logout.resolver';
+import { AUTH_ROUTES } from './features/auth/auth.routes';
+import { USER_ROUTES } from './features/user/user.routes';
 
 export const routes: Routes = [
   {
@@ -21,8 +23,11 @@ export const routes: Routes = [
     resolve: {
       logged:  logoutResolver
     },
-    children: [
-      { path: '', component: LoginComponent },
-    ],
+    children: AUTH_ROUTES
+  },
+    {
+    path: 'user',
+    component: FullscreenLayoutComponent,
+    children: USER_ROUTES
   },
 ];
