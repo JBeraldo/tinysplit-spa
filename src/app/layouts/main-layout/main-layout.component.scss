@@ -1,0 +1,6 @@
+:root {
+  mat.sidenav-overrides((
+    container-background-color: var(--mat-sys-on-surface),
+    container-text-color: black,
+  ));
+}
