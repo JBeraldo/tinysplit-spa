@@ -1,9 +1,9 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { MenuItem } from './shared.types';
 
-export let menuItems: Array<{ name: string, icon:IconProp | '' ,path: string }> = [
-    { name: "Home", icon: 'house',  path: '' },
-    { name: "Fluxo de Caixa", icon: 'money-bill-trend-up' , path: '' },
-    { name: "Contas", icon: 'bank', path: '' },
-    { name: "Perfil", icon: 'user', path: '' },
-    { name: "Sair", icon: 'right-from-bracket', path: '/login' },
-]
+export const menuItems: MenuItem[] = [
+    { name: 'Home', icon: 'house', path: '/' },
+    { name: 'Fluxo de Caixa', icon: 'money-bill-trend-up', path: '/cashflow' },
+    { name: 'Contas', icon: 'bank', path: '/accounts' },
+    { name: 'Perfil', icon: 'user', path: '/profile' },
+    { name: 'Sair', icon: 'right-from-bracket', path: '/login' },
+];

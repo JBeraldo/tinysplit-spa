@@ -1,6 +1,109 @@
-<mat-drawer-container color="primary" class="example-container">
-  <mat-drawer mode="side" opened></mat-drawer>
-  <mat-drawer-content>
-    <router-outlet />
-  </mat-drawer-content>
-</mat-drawer-container>
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidenav -->
+  <mat-sidenav
+    #sidenav
+    [mode]="sidenavMode()"
+    [opened]="sidenavOpened()"
+    class="sidenav"
+  >
+    <!-- Sidenav Header -->
+    <div class="sidenav-header">
+      <h2 class="brand-title">TinySplit</h2>
+    </div>
+
+    <!-- Navigation Menu -->
+    <mat-nav-list class="nav-list">
+      @for (item of menuItems; track item.path) {
+        <mat-list-item
+          class="nav-item"
+          (click)="navigateTo(item.path)"
+          [class.active]="router.url === item.path"
+        >
+          <div class="nav-item-content">
+            @if (item.icon) {
+              <fa-icon [icon]="item.icon" class="nav-icon"></fa-icon>
+            }
+            <span class="nav-label">{{ item.name }}</span>
+          </div>
+        </mat-list-item>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content class="sidenav-content">
+    <!-- Toolbar -->
+    <mat-toolbar class="toolbar" color="primary">
+      <button
+        mat-icon-button
+        (click)="toggleSidenav()"
+        class="menu-button"
+        aria-label="Toggle menu"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="toolbar-title">TinySplit</span>
+
+      <span class="toolbar-spacer"></span>
+
+      <!-- Notifications -->
+      <button
+        mat-icon-button
+        class="toolbar-icon-button"
+        aria-label="Notifications"
+      >
+        <mat-icon matBadge="3" matBadgeColor="warn" matBadgeSize="small">notifications</mat-icon>
+      </button>
+
+      <!-- User Menu -->
+      <button
+        mat-button
+        [matMenuTriggerFor]="userMenu"
+        class="user-button"
+        aria-label="User menu"
+      >
+        <div class="user-avatar">{{ userInitials() }}</div>
+        <div class="user-info" *ngIf="!isMobile()">
+          <span class="user-name">{{ userName() }}</span>
+          <span class="user-email">{{ userEmail() }}</span>
+        </div>
+        <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+      </button>
+
+      <mat-menu #userMenu="matMenu" class="user-menu">
+        <div class="user-menu-header">
+          <div class="user-avatar-large">{{ userInitials() }}</div>
+          <div class="user-details">
+            <p class="user-details-name">{{ userName() }}</p>
+            <p class="user-details-email">{{ userEmail() }}</p>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item (click)="goToProfile()">
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </button>
+
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <!-- Page Content -->
+    <div class="content">
+      <router-outlet />
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
