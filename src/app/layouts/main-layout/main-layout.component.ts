@@ -14,13 +14,13 @@ import { menuItems } from '../../shared/menu-items';
 import { UserService } from '../../features/user/user.service';
 import { AuthService } from '../../features/auth/auth.service';
 import { User } from '../../features/user/user.model';
+import { ThemeService } from '../../core/services/theme.service';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
   imports: [
     RouterOutlet,
-    RouterLink,
     CommonModule,
     MatSidenavContainer,
     MatSidenavContent,
@@ -43,6 +43,7 @@ export class MainLayoutComponent implements OnInit {
   router = inject(Router);
   private userService = inject(UserService);
   private authService = inject(AuthService);
+  themeService = inject(ThemeService);
 
   // Signals for reactive state management
   isMobile = signal(false);
@@ -123,5 +124,9 @@ export class MainLayoutComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
   }
 }

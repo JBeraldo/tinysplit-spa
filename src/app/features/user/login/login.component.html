@@ -1,0 +1,12 @@
+<mat-card-content>
+  <form [formGroup]="loginForm" >
+    <div class="grid grid-cols-1 gap-2">
+      <ts-input type="text" label="Email" [control]="loginForm.controls.username"/>
+      <ts-input type="password" label="Password" [control]="loginForm.controls.password"/>
+    </div>
+  </form>
+</mat-card-content>
+<mat-card-actions>
+  <button (click)="submit()" type="submit" class="w-full" matButton="filled">Login</button>
+</mat-card-actions>
+
